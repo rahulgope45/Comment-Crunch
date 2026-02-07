@@ -1,6 +1,18 @@
 from fastapi import FastAPI;
+from core.database import engine,Base, db_connection
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    #Startup
+    db_connection()
+    print("-----Database connected successfully---")
+    Base.metadata.create_all(bind = engine)
+    yield
+ 
+app = FastAPI(lifespan=lifespan)    
 
 @app.get("/")
 def root():
