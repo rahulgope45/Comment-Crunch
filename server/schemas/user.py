@@ -17,6 +17,11 @@ class UserResponses(BaseModel):
     username: str
     profilepic: Optional[str] = None
     created_at: datetime
+    
+#login
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
 
 #update
 class UserUpdate(BaseModel):
