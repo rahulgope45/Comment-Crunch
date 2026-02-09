@@ -59,5 +59,44 @@ class AuthCpontroller:
             created_at=new_user.created_at
             
         )
+    
+    
+    @staticmethod
+    async def login(db:Session,user: UserLogin) -> UserResponses:
+        """
+        Docstring for login
+        
+        :param db: Description
+        :type db: Session
+        :param user: Description
+        :type user: UserLogin
+        :return: Description
+        :rtype: UserResponses
+        """
+        # checkinh User exist or not
+        db_user = db.query(User).filter(User.email == user.email).first()
+        if not db_user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        
+            
+        #comparing password with hashed password
+        if not bcrypt.checkpw(user.password.encode("utf-8"), db_user.password.encode("utf-8")):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid password"
+            )
+            
+        return UserResponses(
+            id=db_user.id,
+            email=db_user.email,
+            username=db_user.username,
+            profilepic=db_user.profilepic,
+            created_at=db_user.created_at
+        )
+    
+            
         
         
