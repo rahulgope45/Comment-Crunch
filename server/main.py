@@ -5,7 +5,7 @@ from routes.auth_routes import router as auth_router
 
 
 
-@asynccontextmanager
+@asynccontextmanager 
 async def lifespan(app: FastAPI):
     #Startup
     db_connection()
