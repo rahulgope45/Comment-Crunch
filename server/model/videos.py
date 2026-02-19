@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, BigInteger, DateTime, ForeignKey
-from sqlalchemy.sql import func
+from sqlalchemy import Column, Integer, String, Text, BigInteger, DateTime, ForeignKey,Index
+from sqlalchemy.sql import func 
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -23,3 +23,9 @@ class Videos(Base):
     error_message = Column(Text)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    __table_args__ =(
+        Index("idx_videos_video_id","video_id"),
+        Index("idx_videos_channel_id","channel_id"),
+    )
+
