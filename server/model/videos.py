@@ -17,7 +17,7 @@ class Videos(Base):
     thumbnail_url = Column(Text)
     published_at = Column(DateTime)
     fetched_at = Column(DateTime, default=func.now())
-    fetched_by = Column(Integer, ForeignKey("user.id"))
+    fetched_by = Column(Integer, ForeignKey("users.id"))
     total_comments_fetched = Column(Integer, default=0)
     status = Column(String(50), default="pending")  # pending/complete/failed
     error_message = Column(Text)
