@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, BigInteger, DateTime, ForeignKey,Index
 from sqlalchemy.sql import func 
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+# from sqlalchemy.ext.declarative import declarative_base
+from core.database import Base
+# Base = declarative_base()
 
 class Videos(Base):
     __tablename__ = "videos"
@@ -14,6 +14,7 @@ class Videos(Base):
     channel_id = Column(String(255))
     view_count = Column(BigInteger)
     like_count = Column(Integer)
+    comment_count = Column(Integer)
     thumbnail_url = Column(Text)
     published_at = Column(DateTime)
     fetched_at = Column(DateTime, default=func.now())

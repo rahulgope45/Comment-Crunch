@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict  # 🔥 Import ConfigDict
 from datetime import datetime
 from typing import Optional
 
@@ -21,6 +21,7 @@ class VideoResponse(BaseModel):
     channel_id: Optional[str] = None
     view_count: Optional[int] = None
     like_count: Optional[int] = None
+    comment_count: Optional[int] = None  # 🔥 Add this if missing
     thumbnail_url: Optional[str] = None
     published_at: Optional[datetime] = None
     fetched_at: Optional[datetime] = None
@@ -31,8 +32,8 @@ class VideoResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        orm_mode = True   # allows returning SQLAlchemy objects directly
+    # Pydantic v2 syntax
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Update ---
 class VideoUpdate(BaseModel):

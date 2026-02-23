@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer,String,Text,Boolean,DateTime,func,Float,Index,ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+# from sqlalchemy.ext.declarative import declarative_base
+from core.database import Base
+# Base = declarative_base()
 
 class Comments(Base):
     __tablename__ = "comments"
@@ -12,6 +12,7 @@ class Comments(Base):
     author_name = Column(String(255))
     author_channel_id = Column(String(255))
     author_profile_image_url = Column(Text)
+    comment_count = Column(Integer)
     text_original = Column(Text, nullable=False)  # Original comment text
     text_display = Column(Text)  # HTML formatted text (if needed)
     like_count = Column(Integer, default=0)

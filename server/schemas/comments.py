@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict  # Import ConfigDict
 from datetime import datetime
 from typing import Optional
 
@@ -36,8 +36,8 @@ class CommentResponse(BaseModel):
     is_noise: Optional[bool] = None
     created_at: datetime
 
-    class Config:
-        orm_mode = True   # allows returning SQLAlchemy objects directly
+    # Pydantic v2 syntax
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Update ---
 class CommentUpdate(BaseModel):
