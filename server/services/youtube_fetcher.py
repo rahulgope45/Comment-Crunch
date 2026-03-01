@@ -4,22 +4,26 @@ from sqlalchemy import and_
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict
 import time
-
+import logging
 from utils.youtube_service import get_youtube_service
 from model.videos import Videos
 from model.comment import Comments
 from schemas.videos import VideoCreate
 from schemas.comments import CommentCreate
+from services.comment_processor import CommentProcessor
 
+# Set up logging  ← Add these lines
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class YoutubeFetcherService:
     """Service for fetching YouTube data and storing in database"""
-    
+
     @staticmethod
     def fetch_video_metadata(video_id: str) -> Optional[Dict]:
         """
         Fetch video metadata from YouTube API
-        
+
         Returns:
             Dict with video details or None if error
         """
@@ -27,48 +31,49 @@ class YoutubeFetcherService:
             youtube = get_youtube_service()
             if not youtube:
                 return None
-            
-            request = youtube.videos().list(
-                part="snippet,statistics",
-                id=video_id
-            )
+
+            request = youtube.videos().list(part="snippet,statistics", id=video_id)
             response = request.execute()
-            
-            if not response.get('items'):
+
+            if not response.get("items"):
                 return None
-            
-            video_data = response['items'][0]
-            snippet = video_data['snippet']
-            statistics = video_data.get('statistics', {})
-            
+
+            video_data = response["items"][0]
+            snippet = video_data["snippet"]
+            statistics = video_data.get("statistics", {})
+
             return {
                 "video_id": video_id,
-                "title": snippet.get('title'),
-                "channel_name": snippet.get('channelTitle'),
-                "channel_id": snippet.get('channelId'),
-                "view_count": int(statistics.get('viewCount', 0)),
-                "like_count": int(statistics.get('likeCount', 0)),
-                "comment_count": int(statistics.get('commentCount', 0)),
-                "thumbnail_url": snippet.get('thumbnails', {}).get('high', {}).get('url'),
-                "published_at": datetime.fromisoformat(snippet['publishedAt'].replace('Z', '+00:00'))
+                "title": snippet.get("title"),
+                "channel_name": snippet.get("channelTitle"),
+                "channel_id": snippet.get("channelId"),
+                "view_count": int(statistics.get("viewCount", 0)),
+                "like_count": int(statistics.get("likeCount", 0)),
+                "comment_count": int(statistics.get("commentCount", 0)),
+                "thumbnail_url": snippet.get("thumbnails", {})
+                .get("high", {})
+                .get("url"),
+                "published_at": datetime.fromisoformat(
+                    snippet["publishedAt"].replace("Z", "+00:00")
+                ),
             }
-            
+
         except HttpError as e:
             print(f"YouTube API Error: {e}")
             return None
         except Exception as e:
             print(f"Error fetching video metadata: {e}")
             return None
-    
+
     @staticmethod
     def fetch_comments(video_id: str, max_comments: int = 500) -> List[Dict]:
         """
         Fetch comments from YouTube API with pagination
-        
+
         Args:
             video_id: YouTube video ID
             max_comments: Maximum number of comments to fetch
-        
+
         Returns:
             List of comment dictionaries
         """
@@ -76,100 +81,112 @@ class YoutubeFetcherService:
             youtube = get_youtube_service()
             if not youtube:
                 return []
-            
+
             comments = []
             next_page_token = None
-            
+
             while len(comments) < max_comments:
                 request = youtube.commentThreads().list(
                     part="snippet",
                     videoId=video_id,
                     maxResults=min(100, max_comments - len(comments)),  # API max is 100
                     pageToken=next_page_token,
-                    order="relevance"  # Get most relevant comments first
+                    order="relevance",  # Get most relevant comments first
                 )
-                
+
                 response = request.execute()
-                
+
                 # Process comments from response
-                for item in response.get('items', []):
-                    snippet = item['snippet']['topLevelComment']['snippet']
-                    
+                for item in response.get("items", []):
+                    snippet = item["snippet"]["topLevelComment"]["snippet"]
+
                     comment_data = {
-                        "comment_id": item['snippet']['topLevelComment']['id'],
-                        "author_name": snippet.get('authorDisplayName'),
-                        "author_channel_id": snippet.get('authorChannelId', {}).get('value'),
-                        "author_profile_image_url": snippet.get('authorProfileImageUrl'),
-                        "text_original": snippet.get('textOriginal'),
-                        "text_display": snippet.get('textDisplay'),
-                        "like_count": snippet.get('likeCount', 0),
-                        "reply_count": item['snippet'].get('totalReplyCount', 0),
+                        "comment_id": item["snippet"]["topLevelComment"]["id"],
+                        "author_name": snippet.get("authorDisplayName"),
+                        "author_channel_id": snippet.get("authorChannelId", {}).get(
+                            "value"
+                        ),
+                        "author_profile_image_url": snippet.get(
+                            "authorProfileImageUrl"
+                        ),
+                        "text_original": snippet.get("textOriginal"),
+                        "text_display": snippet.get("textDisplay"),
+                        "like_count": snippet.get("likeCount", 0),
+                        "reply_count": item["snippet"].get("totalReplyCount", 0),
                         "is_reply": False,
                         "parent_id": None,
-                        "published_at": datetime.fromisoformat(snippet['publishedAt'].replace('Z', '+00:00'))
+                        "published_at": datetime.fromisoformat(
+                            snippet["publishedAt"].replace("Z", "+00:00")
+                        ),
                     }
                     comments.append(comment_data)
-                
+
                 # Check if there are more pages
-                next_page_token = response.get('nextPageToken')
+                next_page_token = response.get("nextPageToken")
                 if not next_page_token or len(comments) >= max_comments:
                     break
-                
+
                 # Small delay to avoid rate limiting
                 time.sleep(0.1)
-            
+
             return comments[:max_comments]
-            
+
         except HttpError as e:
-            error_content = e.content.decode('utf-8') if e.content else str(e)
-            
+            error_content = e.content.decode("utf-8") if e.content else str(e)
+
             # Check for specific errors
-            if 'commentsDisabled' in error_content:
+            if "commentsDisabled" in error_content:
                 raise Exception("Comments are disabled for this video")
-            elif 'videoNotFound' in error_content:
+            elif "videoNotFound" in error_content:
                 raise Exception("Video not found")
             else:
                 print(f"YouTube API Error: {e}")
                 raise Exception(f"Failed to fetch comments: {str(e)}")
-                
+
         except Exception as e:
             print(f"Error fetching comments: {e}")
             raise e
-    
+
     @staticmethod
-    def check_video_exists(db: Session, video_id: str, user_id: int) -> Optional[Videos]:
+    def check_video_exists(
+        db: Session, video_id: str, user_id: int
+    ) -> Optional[Videos]:
         """
         Check if video already exists in database for this user
-        
+
         Returns:
             Video object if exists and fetched in last 24 hours, else None
         """
         twenty_four_hours_ago = datetime.now(timezone.utc) - timedelta(hours=24)
-        
-        video = db.query(Videos).filter(
-            and_(
-                Videos.video_id == video_id,
-                Videos.fetched_by == user_id,
-                Videos.fetched_at >= twenty_four_hours_ago,
-                Videos.status == "completed"
+
+        video = (
+            db.query(Videos)
+            .filter(
+                and_(
+                    Videos.video_id == video_id,
+                    Videos.fetched_by == user_id,
+                    Videos.fetched_at >= twenty_four_hours_ago,
+                    Videos.status == "completed",
+                )
             )
-        ).first()
-        
+            .first()
+        )
+
         return video
-    
+
     @staticmethod
     def save_video_to_db(db: Session, video_data: Dict, user_id: int) -> Videos:
         """
         Save video metadata to database
-        
+
         Returns:
             Video object
         """
         # Check if video already exists (by video_id only, not user)
-        existing_video = db.query(Videos).filter(
-            Videos.video_id == video_data['video_id']
-        ).first()
-        
+        existing_video = (
+            db.query(Videos).filter(Videos.video_id == video_data["video_id"]).first()
+        )
+
         if existing_video:
             # Update existing video
             for key, value in video_data.items():
@@ -186,50 +203,52 @@ class YoutubeFetcherService:
                 **video_data,
                 fetched_by=user_id,
                 fetched_at=datetime.now(timezone.utc),
-                status="pending"
+                status="pending",
             )
             db.add(new_video)
             db.commit()
             db.refresh(new_video)
             return new_video
-    
+
+    # @staticmethod
+    # def save_comments_to_db(db: Session, comments: List[Dict], video_db_id: int) -> int:
+    #     """
+    #     Bulk save comments to database
+
+    #     Args:
+    #         db: Database session
+    #         comments: List of comment dictionaries
+    #         video_db_id: Database ID of the video (not YouTube video_id)
+
+    #     Returns:
+    #         Number of comments saved
+    #     """
+    #     if not comments:
+    #         return 0
+
+    #     # Delete old comments for this video (if re-fetching)
+    #     db.query(Comments).filter(Comments.video_id == video_db_id).delete()
+
+    #     # Prepare comment objects
+    #     comment_objects = []
+    #     for comment_data in comments:
+    #         comment_obj = Comments(video_id=video_db_id, **comment_data)
+    #         comment_objects.append(comment_obj)
+
+    #     # Bulk insert
+    #     db.bulk_save_objects(comment_objects)
+    #     db.commit()
+
+    #     return len(comment_objects)
+
     @staticmethod
-    def save_comments_to_db(db: Session, comments: List[Dict], video_db_id: int) -> int:
-        """
-        Bulk save comments to database
-        
-        Args:
-            db: Database session
-            comments: List of comment dictionaries
-            video_db_id: Database ID of the video (not YouTube video_id)
-        
-        Returns:
-            Number of comments saved
-        """
-        if not comments:
-            return 0
-        
-        # Delete old comments for this video (if re-fetching)
-        db.query(Comments).filter(Comments.video_id == video_db_id).delete()
-        
-        # Prepare comment objects
-        comment_objects = []
-        for comment_data in comments:
-            comment_obj = Comments(
-                video_id=video_db_id,
-                **comment_data
-            )
-            comment_objects.append(comment_obj)
-        
-        # Bulk insert
-        db.bulk_save_objects(comment_objects)
-        db.commit()
-        
-        return len(comment_objects)
-    
-    @staticmethod
-    def update_video_status(db: Session, video_id: int, status: str, 
-                           total_fetched: int = 0, error_message: str = None):
+    def update_video_status(
+        db: Session,
+        video_id: int,
+        status: str,
+        total_fetched: int = 0,
+        error_message: str = None,
+    ):
         """
         Update video fetch status
         """
@@ -241,3 +260,77 @@ class YoutubeFetcherService:
                 video.error_message = error_message
             video.updated_at = datetime.now(timezone.utc)
             db.commit()
+
+    # Saving to the DB
+    @staticmethod
+    def save_comments_to_db(
+        db: Session, comments: List[Dict], video_db_id: int
+    ) -> Dict[str, int]:
+        """
+            Process and save comments to database
+
+        Args:
+            db: Database session
+            comments: List of comment dictionaries
+            video_db_id: Database ID of the video
+
+        Returns:
+            Dict with save statistics
+
+        """
+
+        if not comments:
+            return {"total": 0, "saved": 0, "rejected": 0}
+
+        # Process comments through pipeline (cleaning + Sentiment)
+
+        logger.info(f"Processing {len(comments)} comments through pipeline...")
+        processing_result = CommentProcessor.process_batch(comments)
+
+        processed_comments = processing_result["processed"]
+        stats = processing_result["stats"]
+
+        # delete old comments for this video on refetching
+        db.query(Comments).filter(Comments.video_id == video_db_id).delete()
+
+        # Saving all comments ---Including  the ones got rejected
+        comments_objects = []
+        for comment_data in processed_comments:
+            comments_obj = Comments(
+                video_id=video_db_id,
+                comment_id=comment_data["comment_id"],
+                author_name=comment_data.get("author_name"),
+                author_channel_id=comment_data.get("author_channel_id"),
+                author_profile_image_url=comment_data.get("author_profile_image_url"),
+                text_original=comment_data["text_original"],
+                text_display=comment_data.get("cleaned_text"),  # Store cleaned text
+                like_count=comment_data.get("like_count", 0),
+                reply_count=comment_data.get("reply_count", 0),
+                is_reply=comment_data.get("is_reply", False),
+                parent_id=comment_data.get("parent_id"),
+                published_at=comment_data.get("published_at"),
+                # Sentiment data
+                sentiment=comment_data.get("sentiment"),
+                sentiment_score=comment_data.get("sentiment_confidence"),
+                is_noise=not comment_data["is_valid"],
+            )
+            comments_objects.append(comments_obj)
+            
+        db.bulk_save_objects(comments_objects)
+        db.commit()
+        
+        logger.info(f"✅ Saved {len(comments_objects)} comments to database")
+        logger.info(f"   Valid: {stats['valid']} | Rejected: {stats['rejected']}")
+        logger.info(f"   Positive: {stats['positive']} | Neutral: {stats['neutral']} | Negative: {stats['negative']}")
+
+        return {
+        "total": len(comments),
+        "saved": len(comments_objects),
+        "valid": stats['valid'],
+        "rejected": stats['rejected'],
+        "sentiment_breakdown": {
+            "positive": stats['positive'],
+            "neutral": stats['neutral'],
+            "negative": stats['negative']
+        }
+    }

@@ -96,37 +96,37 @@ class CommentProcessor:
         }
 
         for comment in comments:
-            text = comment.get("text_orignal", "")
+            text = comment.get("text_original", "")
             result = CommentProcessor.process_comment(text)
 
         # processing results to comment
-        comment["is_valid"] = result["is_valid"]
-        comment["cleaned_text"] = result["cleaned_text"]
-        comment["sentiment"] = result["sentiment"]
-        comment["sentiment_confidence"] = result["sentiment_confidence"]
+            comment["is_valid"] = result["is_valid"]
+            comment["cleaned_text"] = result["cleaned_text"]
+            comment["sentiment"] = result["sentiment"]
+            comment["sentiment_confidence"] = result["sentiment_confidence"]
 
-        if result["is_valid"]:
-            stats["valid"] = +1
+            if result["is_valid"]:
+                stats["valid"] += 1
 
-            if result["sentiment"] == "positive":
-                stats["positive"] = +1
+                if result["sentiment"] == "positive":
+                    stats["positive"] += 1
 
-            elif result["sentiment"] == "negative":
-                stats["negative"] = +1
+                elif result["sentiment"] == "negative":
+                    stats["negative"] += 1
+
+                else:
+                    stats["neutral"] += 1
 
             else:
-                stats["neutral"] = +1
+                stats["rejected"] += 1
 
-        else:
-            stats["rejected"] = +1
+                # Rejection reson
+                reason = result["rejection_reason"]
+                stats["rejection_reasons"][reason] = (
+                    stats["rejection_reasons"].get(reason, 0) + 1
+                )
 
-            # Rejection reson
-            reason = result["rejection_reason"]
-            stats["rejection_reasons"][reason] = (
-                stats["rejection_reasons"].get(reason, 0) + 1
-            )
-
-        processed_comments.append(comment)
+            processed_comments.append(comment)
 
         logger.info(
             f"Processed {stats['total']} comments: {stats['valid']} valid, {stats['rejected']} rejected"
