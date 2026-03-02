@@ -40,7 +40,7 @@ class SentimentAnalyzer:
                 cls.get_api_url(model_name),
                 headers=headers,
                 json=payload,
-                timeout=10
+                timeout=10 # ------changed the timing to 10 from 40-------
             )
             
             # 503 = model loading (OK)
