@@ -68,10 +68,10 @@ class SentimentAnalyzer:
             logger.info(f"Testing {model_name}...")
             if cls.test_model(model_name):
                 cls._working_model = model_name
-                logger.info(f"✅ Using model: {model_name}")
+                logger.info(f" Using model: {model_name}")
                 return model_name
         
-        logger.error("❌ No working models found!")
+        logger.error(" No working models found!")
         return None
     
     @classmethod

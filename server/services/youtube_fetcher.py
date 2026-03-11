@@ -319,7 +319,7 @@ class YoutubeFetcherService:
         db.bulk_save_objects(comments_objects)
         db.commit()
         
-        logger.info(f"✅ Saved {len(comments_objects)} comments to database")
+        logger.info(f"Saved {len(comments_objects)} comments to database")
         logger.info(f"   Valid: {stats['valid']} | Rejected: {stats['rejected']}")
         logger.info(f"   Positive: {stats['positive']} | Neutral: {stats['neutral']} | Negative: {stats['negative']}")
 
