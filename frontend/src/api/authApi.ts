@@ -33,6 +33,11 @@ export const authApi = {
         return res.data;
     },
 
+    async getcurrentUser() {
+     const res = await api.get("auth/me");
+     return res.data;
+    },
+
     async logout(){
         await api.post("/auth/logout");
     },

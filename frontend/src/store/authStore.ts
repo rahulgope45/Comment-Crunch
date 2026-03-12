@@ -1,99 +1,95 @@
-import { axiosInstance } from "../lib/axios";
 import { create } from "zustand";
+import  {authApi} from "../api/authApi"
+import type { LoginPayload } from "../api/authApi";
 
-interface AuthState {
-    authUser: any | null;
-    isSigningUp: boolean;
-    isLoggingIn : boolean;
-    isUpdatingProfile: boolean;
-    isCheckingAuth: boolean;
-    checkAuth:()=> Promise<void>;
-}
+interface User {
+    id: string;
+    email:string;
+};
 
-interface SignUpData {
-    email: String;
-    password: String;
-    userName ?: String;
-}
-interface LogimData {
-    email: String;
-    password: String;
-    userName ?: String;
-}
+interface AuthState{
+    user: User | null;
+    token: string | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    error: string | null;
 
-export const useAuthStore = create<AuthState>((set)=>({
-  authUser : null,
-  isSigningUp: false,
-  isLoggingIn: false,
-  isUpdatingProfile:false,
-  isCheckingAuth:true,
-  
+    login: (data: LoginPayload) => Promise<void>;
+    logout: () => Promise<void>;
+    checkAuth: () => Promise<void>;
+};
 
-  checkAuth: async () =>{
-    try {
-        const res = await axiosInstance.get("/auth/check")
-        set({authUser:res.data})
-        console.log("User",res.data);
-    } catch (error) {
-        console.log("Error in authCheck",error)
-        set({authUser:null});
-    }finally{
-        set({isCheckingAuth:false});
-    }
-  },
+export const useAuthStore = create<AuthState>((set,get)=>({
+    user:null,
+    token: localStorage.getItem("token"),
+    isAuthenticated:false,
+    isLoading:false,
+    error:null,
 
-  signup: async(data:SignUpData)=>{
-    set({isSigningUp : true});
-    try {
-        const res = await axiosInstance.post("/auth/signup",data);
-        set({authUser:res.data});
+    login: async(data) =>{
+        try {
+            set({isLoading:true,error:null});
+            const res = await authApi.login(data);
+            localStorage.setItem("token",res.accessToken);
 
-        // ====To do add toast message =====
+            set({
+                user: res.user,
+                token: res.accessToken,
+                isAuthenticated:true,
+                isLoading:false,
+            });
+        } catch (err: any) {
+            set({
+                error: err.response?.data?.message || "Login failed",
+                isLoading:false,
+            });
+            
+        }
+    },
+
+    logout: async()=>{
+        try {
+            await authApi.logout();
+
+        } catch (error) {}
+        localStorage.removeItem("token");
+
+            set({
+                user: null,
+                token: null,
+                isAuthenticated: false,
+            });
+    },
+
+    checkAuth: async()=>{
+        const  token = get().token;
+        if(!token) return;
+     try {
+        set ({isLoading:true});
+        const user = await authApi.getcurrentUser();
+
+        set({
+            user,
+            isAuthenticated:true,
+            isLoading:false,
+        });
+     } catch {
+        set({
+            user: null,
+            token:null,
+            isAuthenticated:false,
+            isLoading:false
+        });
         
-        console.log("User",res.data);
-    } catch (error) {
-        console.log("SignUp error",error)
-    }finally{
-         set({isSigningUp:false});
-    }
-  },
-
-  login: async(data :LogimData)=>{
-    set({isLoggingIn: true});
-    try {
-        const res =  await axiosInstance.post("/auth/login",data)
-        set({authUser: res.data})
-        
-        // ====To do add toast message =====
-        
-        console.log("User",res.data);
-    } catch (error) {
-        console.log("Login",error);
-    }
-    
-  },
-  
-  logout: async()=>{
-    try {
-        await axiosInstance.post("/auth/logout");
-        set({authUser: null});
-                
-        // ====To do add toast message =====
-        
-        console.log("user Logged out")
-    } catch (error) {
-        console.log("Error logging out",error)
-        
-    }
-  },
-
-  
-// ====To do not added Update profile in backend yet =====
-//   updateProfile: async(data: SignUpData)=> {
-//     const res = await axiosInstance.put("/auth")
-//   }
-
-
+     }
+    },
 
 
 }))
+
+
+
+
+
+
+
