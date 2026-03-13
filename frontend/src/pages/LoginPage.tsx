@@ -1,7 +1,42 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth';
 
 function Login() {
+
+    const navigate  = useNavigate();
+
+    const {isAuthenticated,isLoading,error,login} = useAuth();
+
+    const [form,setForm] = useState({
+        email: "",
+        password: ""
+
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+       e.preventDefault();
+
+       setForm({
+        ...form,
+        [e.target.name] : e.target.value,
+       });
+    };
+
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+
+        await login({
+            email: form.email,
+            password: form.password,
+        })
+    }
+
+    useEffect(()=>{
+        if(isAuthenticated){
+            navigate("/")
+        }
+    },[isAuthenticated,navigate])
 
     
     return (
@@ -14,14 +49,18 @@ function Login() {
                     <h1 className='text-2xl font-bold'>Welcome Back</h1>
                 </div>
 
-                <form className='flex flex-col items-center w-full'>
+                <form 
+                onSubmit={handleSubmit}
+                className='flex flex-col items-center w-full'>
                     <div className='flex flex-col gap-5 w-full max-w-[385px]'>
                         
 
                         <div>
                             <p className='font-semibold mb-1'>Email</p>
                             <input
+                                name='email'
                                 type='email'
+                                onChange={handleChange}
                                 placeholder='Enter Your Email'
                                 className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
                             />
@@ -31,6 +70,8 @@ function Login() {
                             <p className='font-semibold mb-1'>Password</p>
                             <input
                                 type='password'
+                                name='password'
+                                onChange={handleChange}
                                 placeholder='Enter Your Password'
                                 className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
                             />
@@ -39,9 +80,13 @@ function Login() {
                         
                     </div>
 
-                    <button className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold'>
-                        Log In
+                    <button 
+                    disabled={isLoading}
+                    className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold'>
+                        {isLoading ? "Logingin..." : "LogIn"}
                     </button>
+
+                    {error && <p className='text-red-600'>{error}</p>}
                 </form>
 
                 <NavLink 
