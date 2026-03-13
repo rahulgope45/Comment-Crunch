@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import  {authApi} from "../api/authApi"
-import type { LoginPayload } from "../api/authApi";
+import type { LoginPayload, SigninPayload } from "../api/authApi";
+
+
 
 interface User {
     id: string;
@@ -13,7 +15,7 @@ interface AuthState{
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;
-
+    signin: (data: SigninPayload) => Promise<void>;
     login: (data: LoginPayload) => Promise<void>;
     logout: () => Promise<void>;
     checkAuth: () => Promise<void>;
@@ -59,6 +61,28 @@ export const useAuthStore = create<AuthState>((set,get)=>({
                 token: null,
                 isAuthenticated: false,
             });
+    },
+
+    signin: async(data)=>{
+            try {
+                set({isLoading:true, error:null});
+
+                const res = await authApi.signin(data);
+                localStorage.setItem("token",res.accessToken);
+
+                set({
+                    user:res.user,
+                    token:res.accessToken,
+                    isAuthenticated:true,
+                    isLoading:false,
+                })
+            } catch (err:any) {
+                set({
+                    error: err.response?.data?.message || "Signup Error",
+                    isLoading:false,
+                })
+                
+            }
     },
 
     checkAuth: async()=>{

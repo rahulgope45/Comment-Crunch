@@ -7,10 +7,16 @@ const api = axios.create({
     withCredentials: true,
 });
 
+
+
 export interface LoginPayload{
     email: string;
-    password: string
+    password: string;
 };
+
+export interface SigninPayload extends LoginPayload{
+    username: string;
+}  
 
 export interface AuthResponse{
     user: {
@@ -24,12 +30,12 @@ export interface AuthResponse{
 
 export const authApi = {
     async login(data: LoginPayload): Promise<AuthResponse>{
-        const res = await api.post("/auth/login",data);
+        const res = await api.post("auth/login",data);
         return res.data;
     },
 
-    async signin(data: LoginPayload): Promise<AuthResponse>{
-        const res = await api.post("/auth/signup",data)
+    async signin(data: SigninPayload): Promise<AuthResponse>{
+        const res = await api.post("auth/signup",data)
         return res.data;
     },
 
@@ -39,6 +45,6 @@ export const authApi = {
     },
 
     async logout(){
-        await api.post("/auth/logout");
+        await api.post("auth/logout");
     },
 }
