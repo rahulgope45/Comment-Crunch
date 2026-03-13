@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 function Home() {
   return (
-    <div className='flex min-h-screen w-full items-center justify-center'>
+    <div className='flex mt-30 items-center justify-center'>
       <div className='flex flex-col items-center font-garamond gap-4'>
         <p className='font-medium text-[25px]'>
           For Creators & Agencies
@@ -34,9 +34,13 @@ function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
-
-
         </NavLink>
+
+        <img
+        src='/saphire.gif'
+        alt='Gif-Herosection'
+        className='w-[600px] h-[240px] rounded-[60px]'
+        />
       </div>
     </div>
   )
