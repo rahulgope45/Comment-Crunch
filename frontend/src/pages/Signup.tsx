@@ -49,12 +49,12 @@ function Signup() {
 
     return (
 
-        <div className='flex items-start min-h-screen w-full overflow-x-hidden'>
+        <div className='flex items-start min-h-screen w-full overflow-x-hidden mt-10'>
 
             {/* Signup Section */}
             <div className='ml-[20px] w-full md:w-[540px] flex flex-col items-center mt-[75px] shrink-0'>
                 <div className='mb-8'>
-                    <h1 className='text-2xl font-bold'>Create A New Account</h1>
+                    <h1 className='text-2xl font-bold font-garamond '>Create A New Account</h1>
                 </div>
 
                 <form
@@ -63,7 +63,7 @@ function Signup() {
                 >
                     <div className='flex flex-col gap-5 w-full max-w-[385px]'>
                         <div>
-                            <p className='font-semibold mb-1'>Name</p>
+                            <p className='font-semibold mb-1 font-garamond'>Name</p>
                             <input
                                 name='username'
                                 onChange={handleChange}
@@ -74,7 +74,7 @@ function Signup() {
                         </div>
 
                         <div>
-                            <p className='font-semibold mb-1'>Email</p>
+                            <p className='font-semibold mb-1 font-garamond'>Email</p>
                             <input
                                 name='email'
                                 type='email'
@@ -85,7 +85,7 @@ function Signup() {
                         </div>
 
                         <div>
-                            <p className='font-semibold mb-1'>Password</p>
+                            <p className='font-semibold mb-1 font-garamond'>Password</p>
                             <input
                                 type='password'
                                 name='password'
@@ -96,7 +96,7 @@ function Signup() {
                         </div>
 
                         <div>
-                            <p className='font-semibold mb-1'>Confirm Password</p>
+                            <p className='font-semibold mb-1 font-garamond'>Confirm Password</p>
                             <input
                                 type='password'
                                 name='confirmPassword'
@@ -109,7 +109,7 @@ function Signup() {
 
                     <button
                         disabled={isLoading}
-                        className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold'>
+                        className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold font-garamond'>
                         {isLoading ? "Creating..." : "Create A Account"}
                     </button>
 
@@ -120,7 +120,7 @@ function Signup() {
 
                 <NavLink
                     to={"/login"}
-                    className='underline text-sky-700 hover:text-sky-400 cursor-pointer mt-3'>
+                    className='underline text-sky-700 hover:text-sky-400 cursor-pointer mt-3 font-garamond'>
                     Already Have An Account?
                 </NavLink>
             </div>

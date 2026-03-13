@@ -1,5 +1,5 @@
 import './App.css'
-import { Route,Routes,Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Login from './pages/LoginPage'
 import Signup from './pages/Signup'
@@ -9,14 +9,18 @@ import Home from './pages/Home'
 
 function App() {
   // const {authUser,checkAuth,isCheckingAuth} = useAuthStore();
-  
+
 
   return (
     <main>
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navbar />
+      </div>
+
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/signup' element={<Signup/>}/>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </main>
   )

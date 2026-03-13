@@ -46,7 +46,7 @@ function Login() {
             {/* Signup Section - Strictly ml-[20px] as requested */}
             <div className='ml-[20px] w-full md:w-[540px] flex flex-col items-center mt-[75px] shrink-0'>
                 <div className='mb-8'>
-                    <h1 className='text-2xl font-bold'>Welcome Back</h1>
+                    <h1 className='text-2xl font-bold font-garamond '>Welcome Back</h1>
                 </div>
 
                 <form 
@@ -56,7 +56,7 @@ function Login() {
                         
 
                         <div>
-                            <p className='font-semibold mb-1'>Email</p>
+                            <p className='font-semibold mb-1 font-garamond '>Email</p>
                             <input
                                 name='email'
                                 type='email'
@@ -67,7 +67,7 @@ function Login() {
                         </div>
 
                         <div>
-                            <p className='font-semibold mb-1'>Password</p>
+                            <p className='font-semibold mb-1 font-garamond'>Password</p>
                             <input
                                 type='password'
                                 name='password'
@@ -82,7 +82,7 @@ function Login() {
 
                     <button 
                     disabled={isLoading}
-                    className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold'>
+                    className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold font-garamond'>
                         {isLoading ? "Logingin..." : "LogIn"}
                     </button>
 
@@ -91,7 +91,7 @@ function Login() {
 
                 <NavLink 
                 to={"/signup"}
-                className='underline text-sky-700 hover:text-sky-400 cursor-pointer mt-3'>
+                className='underline text-sky-700 hover:text-sky-400 cursor-pointer mt-3 font-garamond'>
                     Don't Have An Account?
                 </NavLink>
             </div>
