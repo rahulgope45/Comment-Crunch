@@ -3,7 +3,7 @@ import React from 'react'
 const Whyus: React.FC = () => {
 
     return (
-        <div className=' flex flex-col items-center justify-center gap-3 font-garamond'>
+        <div className=' flex flex-col items-center justify-center gap-3 font-garamond mb-[640px] '>
             <h1 className='text-[50px] font-bold  '>
                 Why Choose Us?
             </h1>
@@ -11,7 +11,7 @@ const Whyus: React.FC = () => {
                 We combine creativity and strategy to deliver results that matter.
             </p>
             <div className='relative flex gap-4 text-white text-[25px]'>
-                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col  text-start justify-center p-5 bg-stone-500 gap-7 absolute top-10 right-2'>
+                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col  text-start justify-center p-5 bg-stone-500 gap-7 absolute top-10 right-2 shadow-2xl shadow-blue-900'>
                     <div className='flex items-center gap-2'>
                         {/* Tick icon */}
                         <svg
@@ -74,7 +74,7 @@ const Whyus: React.FC = () => {
                         <p>Actionable Insights</p>
                     </div>
                 </div>
-                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col text-start justify-center p-5 bg-sky-800 gap-7 absolute -bottom-160 left-5'>
+                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col text-start justify-center p-5 bg-sky-800 gap-7 absolute -bottom-160 left-5 shadow-2xl shadow-stone-900'>
                     <div className='flex items-center gap-2'>
                         {/* Tick icon */}
                         <svg
