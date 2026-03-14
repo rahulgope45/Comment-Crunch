@@ -31,7 +31,7 @@ const Services: React.FC=()=> {
     
     return (
         <div className='flex flex-col items-center justify-center gap-20'>
-            <h1 className='font-garamond font-bold text-[40px] '>Services</h1>
+            <h1 className='font-garamond font-bold text-[40px] text-gray-700'>Services</h1>
             <div className='flex gap-20'>
             {data.map((iteam,index)=>(
                 <div
