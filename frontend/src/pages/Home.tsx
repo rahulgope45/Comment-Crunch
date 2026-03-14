@@ -1,8 +1,7 @@
-
-import { NavLink } from 'react-router-dom'
 import HeroSection from '../components/HeroSection'
 import Services from '../components/Services'
 import OurAim from '../components/OurAim'
+import Whyus from '../components/Whyus'
 
 function Home() {
   return (
@@ -10,6 +9,7 @@ function Home() {
       <HeroSection/>
       <Services/>
       <OurAim/>
+      <Whyus/>
     </div>
   )
 }
