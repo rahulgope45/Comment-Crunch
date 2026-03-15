@@ -7,6 +7,8 @@ import type { LoginPayload, SigninPayload } from "../api/authApi";
 interface User {
     id: string;
     email:string;
+    username: string;
+    profilepic?: string| null
 };
 
 interface AuthState{

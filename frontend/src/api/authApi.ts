@@ -23,6 +23,8 @@ export interface AuthResponse{
         id: string;
         email: string;
         name: string;
+        username:string
+        profilepic?: string | null
     };
     accessToken: string;
 
