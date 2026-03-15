@@ -22,8 +22,14 @@ def get_token_from_cookie(request: Request) -> Optional[str]:
         Token string or None
     """
     token = request.cookies.get("access_token")
-    if token and token.startswith("Bearer "):
+    if not token:
+        return None
+    
+    # Handle cases where the token is stored with or without the "Bearer " prefix
+    # and handle URL encoding (like %20 for space)
+    if token.startswith("Bearer "):
         return token.replace("Bearer ", "")
+        
     return token
 
 

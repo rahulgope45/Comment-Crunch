@@ -1,27 +1,19 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import type React from "react";
 
-interface Props{
-    children :React.ReactNode;
-}
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+    const { isAuthenticated, isLoading } = useAuth();
 
-function ProtectedRoute({children}:Props){
-    const {isAuthenticated,isLoading} = useAuth();
-
-    if(isLoading){
-        return(
-            <div>
-                Loading...
-            </div>
-        )
+    // ✅ Wait for checkAuth to finish before deciding
+    if (isLoading) {
+        return <div>Loading...</div>; // or a spinner component
     }
 
-    if(!isAuthenticated){
-        return <Navigate to="/login" replace/>
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
     }
 
-    return <>{children}</>
-}
+    return <>{children}</>;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

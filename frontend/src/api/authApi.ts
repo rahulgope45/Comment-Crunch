@@ -16,37 +16,45 @@ export interface LoginPayload{
 
 export interface SigninPayload extends LoginPayload{
     username: string;
-}  
-
-export interface AuthResponse{
-    user: {
-        id: string;
-        email: string;
-        name: string;
-        username:string
-        profilepic?: string | null
-    };
-    accessToken: string;
-
 }
 
+export interface UserResponse {
+    id: number;
+    email: string;
+    username: string;
+    profilepic?: string | null;
+    created_at?: string;
+}
+
+// export interface AuthResponse{
+//     user: {
+//         id: number;
+//         email: string;
+//         name: string;
+//         username:string
+//         profilepic?: string | null
+//     };
+//     accessToken: string;
+
+// }
+
 export const authApi = {
-    async login(data: LoginPayload): Promise<AuthResponse>{
-        const res = await api.post("auth/login",data);
+    async login(data: LoginPayload): Promise<UserResponse>{
+        const res = await api.post("api/auth/login",data);
         return res.data;
     },
 
-    async signin(data: SigninPayload): Promise<AuthResponse>{
-        const res = await api.post("auth/signup",data)
+    async signin(data: SigninPayload): Promise<UserResponse>{
+        const res = await api.post("api/auth/signup",data)
         return res.data;
     },
 
-    async getcurrentUser() {
-     const res = await api.get("auth/me");
+    async getcurrentUser(): Promise<UserResponse> {
+     const res = await api.get("api/auth/me");
      return res.data;
     },
 
-    async logout(){
-        await api.post("auth/logout");
+    async logout():Promise<void>{
+        await api.post("api/auth/logout");
     },
 }

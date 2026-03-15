@@ -69,12 +69,13 @@ class AuthCpontroller:
 
         response.set_cookie(
             key="access_token",
-            value=f"Bearer {access_token}",
+            value=access_token,
             httponly=True,
             max_age=1800,
             expires=1800,
             samesite="lax",
             secure=False,
+            path='/'
         )
 
         # User response
@@ -117,12 +118,13 @@ class AuthCpontroller:
 
         response.set_cookie(
             key="access_token",
-            value=f"Bearer {access_token}",
+            value=access_token,
             httponly=True,
             max_age=1800,
             expires=1800,
             samesite="lax",
             secure=False,
+            path='/'
         )
         return UserResponses(
             id=db_user.id,
@@ -183,7 +185,7 @@ class AuthCpontroller:
             )
             
         user = db.query(User).filter(User.id == user_id).first()
-        
+        print("Cookies:", request.cookies)
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, 
