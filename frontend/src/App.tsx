@@ -3,13 +3,12 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Login from './pages/LoginPage'
 import Signup from './pages/Signup'
-import { useAuthStore } from './store/authStore'
 import Home from './pages/Home'
 import Application from './pages/Application'
 
 
 function App() {
-  // const {authUser,checkAuth,isCheckingAuth} = useAuthStore();
+
 
 
   return (

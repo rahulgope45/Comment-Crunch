@@ -1,6 +1,6 @@
-import React from 'react'
+import { type JSX } from 'react'
 
-function Application() {
+function Application(): JSX.Element {
     return (
         <div className='flex flex-col items-center justify-cente mt-40'>
             {/* Input Section */}
