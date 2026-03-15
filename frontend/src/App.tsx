@@ -5,6 +5,7 @@ import Login from './pages/LoginPage'
 import Signup from './pages/Signup'
 import { useAuthStore } from './store/authStore'
 import Home from './pages/Home'
+import Application from './pages/Application'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/app' element={<Application/>}/>
       </Routes>
     </main>
   )
