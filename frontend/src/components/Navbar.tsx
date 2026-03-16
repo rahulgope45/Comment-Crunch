@@ -38,7 +38,7 @@ function Navbar() {
         >
           Contact
         </NavLink>
-        <div>
+        <div className='text-[25px] font-garamond'>
           {!isAuthenticated ? (
             <NavLink to="/login">Login</NavLink>
           ) : (
