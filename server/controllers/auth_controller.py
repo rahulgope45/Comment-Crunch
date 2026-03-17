@@ -143,13 +143,13 @@ class AuthCpontroller:
         :type response: Response
         """
         response.delete_cookie(
-            response.delete_cookie(
+            
             key="access_token",
             path="/",
             samesite="none" if IS_PRODUCTION else "lax",  # 🔥 Changed
             secure=IS_PRODUCTION,                          # 🔥 Changed
             httponly=True,
-        )
+        
         )
         return {"message": "Logged out successfully"}
 
