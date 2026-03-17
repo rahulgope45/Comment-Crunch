@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, status, Response ,Request
+from fastapi import FastAPI, HTTPException, status, Response, Request
 from schemas.user import UserCreate, UserResponses, UserLogin, UserUpdate
 import bcrypt
 from model.user import User
@@ -13,7 +13,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
-
+IS_PRODUCTION = os.getenv("ENVIRONMENT", "development") == "production"
 class AuthCpontroller:
 
     @staticmethod
@@ -72,9 +72,8 @@ class AuthCpontroller:
             value=access_token,
             httponly=True,
             max_age=1800,
-            expires=1800,
-            samesite="lax",
-            secure=False,
+            samesite="none" if IS_PRODUCTION else "lax", 
+            secure=IS_PRODUCTION,                        
             path='/'
         )
 
@@ -114,17 +113,18 @@ class AuthCpontroller:
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
             )
 
-        access_token = create_access_token(data={"sub": db_user.email, "user_id": db_user.id})
+        access_token = create_access_token(
+            data={"sub": db_user.email, "user_id": db_user.id}
+        )
 
         response.set_cookie(
             key="access_token",
             value=access_token,
             httponly=True,
             max_age=1800,
-            expires=1800,
-            samesite="lax",
-            secure=False,
-            path='/'
+            samesite="none" if IS_PRODUCTION else "lax",  
+            secure=IS_PRODUCTION,  
+            path="/",
         )
         return UserResponses(
             id=db_user.id,
@@ -143,28 +143,29 @@ class AuthCpontroller:
         :type response: Response
         """
         response.delete_cookie(
+            response.delete_cookie(
             key="access_token",
-            path="/",  # 🔥 Add this
-            samesite="lax",  # 🔥 Must match signup/login
-            secure=False,  # 🔥 Must match signup/login (True in production)
+            path="/",
+            samesite="none" if IS_PRODUCTION else "lax",  # 🔥 Changed
+            secure=IS_PRODUCTION,                          # 🔥 Changed
             httponly=True,
         )
+        )
         return {"message": "Logged out successfully"}
-    
+
     @staticmethod
-    async def get_current_user(request:Request,db: Session):
+    async def get_current_user(request: Request, db: Session):
         """
         Extracts the token from the cookie, verifies it, and returns the user object.
         """
-        
+
         token = request.cookies.get("access_token")
-        
+
         if not token:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Not Authenticated"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Not Authenticated"
             )
-            
+
         try:
             if token.startswith("Bearer "):
                 token = token.split(" ")[1]
@@ -172,25 +173,21 @@ class AuthCpontroller:
             # 3. Decode the JWT
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             user_id: str = payload.get("user_id")
-            
+
             if user_id is None:
                 raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED, 
-                    detail="Invalid token payload"
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token payload",
                 )
         except JWTError:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User Not Found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User Not Found"
             )
-            
+
         user = db.query(User).filter(User.id == user_id).first()
         print("Cookies:", request.cookies)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, 
-                detail="User no longer exists"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User no longer exists"
             )
-        return user 
-            
-        
+        return user

@@ -5,6 +5,7 @@ from schemas.user import UserCreate,UserLogin,UserResponses
 from core.database import get_db 
 
 
+
 router = APIRouter(prefix="/auth",tags=["Authentication"])
 
 @router.post("/signup",response_model=UserResponses,status_code=201)

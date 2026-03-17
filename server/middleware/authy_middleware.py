@@ -7,6 +7,7 @@ from utils.auth_utils import verify_token
 from core.database import get_db
 from model.user import User
 
+
 # OAuth2 scheme (for extracting token from Authorization header as backup)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login", auto_error=False)
 
