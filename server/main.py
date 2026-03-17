@@ -31,6 +31,7 @@ origins=[
     "http://localhost:5173",
     "http://localhost:3000",
     "http://127.0.0.1:5173",
+    "https://comment-crunch-six.vercel.app",
     os.getenv("FRONTEND_URL")
 ]
 
