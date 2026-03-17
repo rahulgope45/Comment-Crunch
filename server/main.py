@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from routes.auth_routes import router as auth_router
 from routes.comment_routes import router as comment_router
 from fastapi.middleware.cors import CORSMiddleware
-
+import os
 from model.user import User
 from model.comment import Comments
 from model.videos import Videos
@@ -30,7 +30,8 @@ app = FastAPI(lifespan=lifespan)
 origins=[
     "http://localhost:5173",
     "http://localhost:3000",
-    "http://127.0.0.1:5173"
+    "http://127.0.0.1:5173",
+    os.getenv("FRONTEND_URL")
 ]
 
 app.add_middleware(
@@ -52,3 +53,7 @@ app.include_router(comment_router,prefix="/api")
 @app.get("/")
 def root():
     return {"message": "Server is running"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}

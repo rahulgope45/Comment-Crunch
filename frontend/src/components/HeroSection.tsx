@@ -1,47 +1,73 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 
-function HeroSection() {
+const HeroSection: React.FC = () => {
   return (
-    <div className='flex flex-col items-center font-garamond gap-4'>
-        <p className='font-medium text-[25px]'>
+    <div className="flex flex-col items-center justify-center min-h-[90vh] px-6 text-black bg-white font-['EB_Garamond',_serif]">
+      
+      {/* Small Badge */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-6"
+      >
+        <span className="px-4 py-1.5 border border-black/10 rounded-full font-sans text-[10px] uppercase tracking-[0.3em] font-bold opacity-60">
           For Creators & Agencies
-        </p>
-        <p className='text-center font-bold text-[40px] text-indigo-800'>
-          Know Your Community<br />
-          Better With<br />
-          Comment Crunch
-        </p>
-        <p className='text-center font-normal text-[20px]'>
-          Made for agencies and creatives, designed to showcase<br />
-          your work with a polished, professional look.
-        </p>
-        <NavLink to={"/app"}
-          className="w-[200px] h-[50px] bg-indigo-800 hover:bg-indigo-900 flex items-center justify-center text-white rounded-3xl gap-2"
+        </span>
+      </motion.div>
 
+      {/* Main Heading */}
+      <motion.h1 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="text-center font-bold text-[60px] md:text-[90px] leading-[0.9] tracking-tighter uppercase mb-8"
+      >
+        Know Your Community<br />
+        <span className="italic font-medium text-[#948181]">Better With</span><br />
+        Comment Crunch
+      </motion.h1>
+
+      
+
+      {/* CTA Button */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3 }}
+        className="mb-7"
+      >
+        <NavLink 
+          to="/app"
+          className="group relative flex items-center justify-center w-[220px] h-[60px] bg-black text-white overflow-hidden transition-all duration-500"
         >
-          Start Now
-          <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-3 h-3 rotate-[-50deg]"
-              viewBox="0 0 22 22"
-              fill="none"
-              stroke="black"
-              strokeWidth="2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
+          <span className="relative z-10 font-sans font-bold uppercase text-xs tracking-widest flex items-center gap-3">
+            Start Now 
+            <HiOutlineArrowNarrowRight className="text-xl group-hover:translate-x-2 transition-transform duration-300" />
+          </span>
+          <div className="absolute inset-0 bg-[#948181] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
         </NavLink>
+      </motion.div>
 
+      {/* Asset Display */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="relative"
+      >
+        <div className="absolute -inset-4 bg-[#948181]/10 blur-3xl rounded-full opacity-50"></div>
         <img
-        src='/saphire.gif'
-        alt='Gif-Herosection'
-        className='w-[600px] h-[240px] rounded-[60px] shadow-2xl shadow-blue-950'
+          src="/saphire.gif"
+          alt="Visual Intelligence"
+          className="relative h-[200px] w-[900px] max-w-[900px] aspect-video object-cover rounded-2xl shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-black/5"
         />
-      </div>
-  )
-}
+      </motion.div>
+      
+    </div>
+  );
+};
 
-export default HeroSection
+export default HeroSection;
