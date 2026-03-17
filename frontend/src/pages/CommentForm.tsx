@@ -99,7 +99,7 @@ function CommentForm({ onSubmit, isLoading }: CommentFormProps): JSX.Element {
                         type="submit"
                         disabled={isLoading}
                         className={`h-[70px] px-8 rounded-lg font-semibold text-white transition-colors ${isLoading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-gray-400 cursor-not-allowed rounded-2xl'
                                 : 'bg-blue-600 hover:bg-blue-700'
                             }`}
                     >

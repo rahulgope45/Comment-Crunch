@@ -27,13 +27,13 @@ function Navbar() {
           About
         </NavLink>
         <NavLink
-          to={"/about"}
+          to={"/model"}
           className="font-garamond text-[25px] font-normal"
         >
           Model
         </NavLink>
         <NavLink
-          to={"/about"}
+          to={"/contact"}
           className="font-garamond text-[25px] font-normal"
         >
           Contact

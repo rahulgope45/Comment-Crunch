@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Login from './pages/LoginPage'
 import Signup from './pages/Signup'
@@ -8,6 +8,9 @@ import Application from './pages/Application'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useEffect } from 'react'
 import { useAuth } from './hooks/useAuth'
+import ModelDetailPage from './pages/ABoutModel'
+import AboutPage from './pages/AboutProject'
+import ContactRedirect from './pages/AboutUs'
 
 function App() {
 
@@ -27,6 +30,9 @@ useEffect(()=>{
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/contact' element={<ContactRedirect />} />
+        <Route path='/model' element={<ModelDetailPage />} />
         <Route path='/app' element={
           <ProtectedRoute>
             <Application />
