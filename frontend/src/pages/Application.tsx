@@ -3,7 +3,7 @@ import VideoMetadta from './VideoMetadta';
 import OverallSentiment from '../components/OverallSentiment';
 import SentimentPieChart from '../components/SentimentPieChart';
 import SentimentBarChart from '../components/SentimentBarChart';
-import CommentForm from './COmmentForm';
+import CommentForm from './CommentForm';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';

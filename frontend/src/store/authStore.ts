@@ -4,12 +4,12 @@ import type { LoginPayload, SigninPayload, UserResponse } from "../api/authApi";
 
 
 
-interface User {
-    id: number;
-    email: string;
-    username: string;
-    profilepic?: string | null
-};
+// interface User {
+//     id: number;
+//     email: string;
+//     username: string;
+//     profilepic?: string | null
+// };
 
 interface AuthState {
     user: UserResponse | null;
@@ -23,7 +23,7 @@ interface AuthState {
     checkAuth: () => Promise<void>;
 };
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     // token: localStorage.getItem("token"),
     isAuthenticated: false,
@@ -61,7 +61,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
         set({
             user: null,
-            token: null,
+            // token: null,
             isAuthenticated: false,
         });
     },
