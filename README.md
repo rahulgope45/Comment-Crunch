@@ -1,4 +1,4 @@
-# 🌀 Comment Crunch
+#  Comment Crunch
 ### **AI-Powered Community Sentiment Mapping**
 
 **Comment Crunch** is a high-performance analytical tool designed for creators and agencies to "Know Their Community Better." By leveraging Natural Language Processing, it fetches YouTube comment streams and synthesizes them into actionable emotional insights using a modern, editorial interface.
@@ -14,7 +14,7 @@
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend
 * **Framework:** React + TypeScript (Vite)
@@ -39,8 +39,9 @@ git clone https://github.com/your-username/comment-crunch.git
 cd comment-crunch
 2. Setup Backend
 cd server
+```
 
-# Create virtual environment
+### 2. Create virtual environment
 python -m venv venv
 
 # Activate (Windows)
@@ -51,11 +52,17 @@ venv\Scripts\activate
 
 pip install -r requirements.txt
 uvicorn main:app --reload
-3. Setup Frontend
+
+### 3. Setup Frontend
+```
 cd frontend
+```
+```
 npm install
+```
 
 # Ensure you have your .env variables set
+```
 npm run dev
 Environment Variables
 Backend (server/.env)
@@ -70,8 +77,10 @@ ENVIRONMENT	development or production
 Frontend (frontend/.env)
 Key	Description
 VITE_API_URL	http://localhost:8000
-🤝 Connect With Me
+```
 
-Connect With Me
-Portfolio: portfolio-2-two-ebon.vercel.app
-LinkedIn: Rahul Gope
+
+### Connect With Me
+    [![Portfolio](https://img.shields.io/badge/Saideep_Morepatil-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://portfolio-2-two-ebon.vercel.app)
+    [![Portfolio](https://img.shields.io/badge/Saideep_Morepatil-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rahul-gope-808476369)
+    
