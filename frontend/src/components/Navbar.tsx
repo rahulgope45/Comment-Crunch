@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="  sticky top-0 z-50 font-['EB_Garamond',_serif]">
+    <nav className=" sticky top-0 z-50  border-b border-black/5 font-['EB_Garamond',_serif]">
       <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
         
         {/* Logo */}

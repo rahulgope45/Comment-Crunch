@@ -1,144 +1,70 @@
-import React from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FiCheckCircle } from 'react-icons/fi';
 
-const Whyus: React.FC = () => {
+const WhyUs: React.FC = () => {
+    const list1 = ["Accurate Sentiment Analysis", "Easy to Use", "Actionable Insights"];
+    const list2 = ["Scalable for Any Need", "Professional Reports", "Secure & Reliable"];
 
     return (
-        <div className=' flex flex-col items-center justify-center gap-3 font-garamond mb-[640px] '>
-            <h1 className='text-[50px] font-bold  '>
-                Why Choose Us?
-            </h1>
-            <p className='text-[25px] font-normal '>
-                We combine creativity and strategy to deliver results that matter.
-            </p>
-            <div className='relative flex gap-4 text-white text-[25px]'>
-                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col  text-start justify-center p-5 bg-stone-500 gap-7 absolute top-10 right-2 shadow-2xl shadow-blue-900'>
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
+        <section className="py-24 px-6 bg-white font-['EB_Garamond',_serif] overflow-hidden">
+            <div className="max-w-6xl mx-auto flex flex-col items-center">
 
-                        <p className=''>Accurate Sentiment Analysis</p>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <p >Easy to Use</p>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <p>Actionable Insights</p>
-                    </div>
-                </div>
-                <div className='w-[360px] h-[435px] rounded-[20px] flex flex-col text-start justify-center p-5 bg-sky-800 gap-7 absolute -bottom-160 left-5 shadow-2xl shadow-stone-900'>
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <p>Scalable for Any Need</p>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <p>Professional Reports</p>
-                    </div> 
-                    <div className='flex items-center gap-2'>
-                        {/* Tick icon */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 text-white"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-                            <path
-                                d="M9 12l2 2l4-4"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <p>Secure & Reliable</p>
-                    </div>
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-20"
+                >
+                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-4">
+                        Why Choose Us?
+                    </h2>
+                    <p className="font-sans text-lg md:text-xl opacity-60 max-w-2xl mx-auto">
+                        We combine creativity and strategy to deliver results that matter.
+                    </p>
+                </motion.div>
+
+                {/* Staggered Cards Container */}
+                {/* Cards Container */}
+                <div className="w-full grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-12 relative">
+
+                    {/* Card 1 */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="md:-mt-10 p-5 md:p-12 bg-black text-white rounded-[24px] md:rounded-[40px] shadow-2xl flex flex-col justify-center gap-4 md:gap-8 min-h-[220px] md:min-h-[400px]"
+                    >
+                        {list1.map((item, i) => (
+                            <div key={i} className="flex items-center gap-2 md:gap-4 group">
+                                <FiCheckCircle className="text-[#948181] text-lg md:text-2xl shrink-0 group-hover:scale-125 transition-transform" />
+                                <p className="text-sm md:text-2xl font-medium tracking-tight">{item}</p>
+                            </div>
+                        ))}
+                    </motion.div>
+
+                    {/* Card 2 */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="md:mt-10 p-5 md:p-12 bg-[#948181] text-white rounded-[24px] md:rounded-[40px] shadow-2xl flex flex-col justify-center gap-4 md:gap-8 min-h-[220px] md:min-h-[400px]"
+                    >
+                        {list2.map((item, i) => (
+                            <div key={i} className="flex items-center gap-2 md:gap-4 group">
+                                <FiCheckCircle className="text-black text-lg md:text-2xl shrink-0 group-hover:scale-125 transition-transform" />
+                                <p className="text-sm md:text-2xl font-medium tracking-tight">{item}</p>
+                            </div>
+                        ))}
+                    </motion.div>
+
                 </div>
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
-export default Whyus
+export default WhyUs;

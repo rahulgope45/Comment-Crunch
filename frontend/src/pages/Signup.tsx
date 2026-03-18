@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { motion } from 'framer-motion';
+import { type JSX } from 'react';
 
-function Signup() {
+function Signup(): JSX.Element {
 
     const { isLoading, error, isAuthenticated, signin } = useAuth();
 
@@ -49,92 +51,115 @@ function Signup() {
 
     return (
 
-        <div className='flex items-start min-h-screen w-full overflow-x-hidden mt-10'>
-
-            {/* Signup Section */}
-            <div className='ml-[20px] w-full md:w-[540px] flex flex-col items-center mt-[75px] shrink-0'>
-                <div className='mb-8'>
-                    <h1 className='text-2xl font-bold font-garamond '>Create A New Account</h1>
-                </div>
-
-                <form
-                    className='flex flex-col items-center w-full'
-                    onSubmit={handleSubmit}
-                >
-                    <div className='flex flex-col gap-5 w-full max-w-[385px]'>
-                        <div>
-                            <p className='font-semibold mb-1 font-garamond'>Name</p>
-                            <input
-                                name='username'
-                                onChange={handleChange}
-                                type='text'
-                                placeholder='Enter Your Name'
-                                className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
-                            />
-                        </div>
-
-                        <div>
-                            <p className='font-semibold mb-1 font-garamond'>Email</p>
-                            <input
-                                name='email'
-                                type='email'
-                                onChange={handleChange}
-                                placeholder='Enter Your Email'
-                                className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
-                            />
-                        </div>
-
-                        <div>
-                            <p className='font-semibold mb-1 font-garamond'>Password</p>
-                            <input
-                                type='password'
-                                name='password'
-                                onChange={handleChange}
-                                placeholder='Enter Your Password'
-                                className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
-                            />
-                        </div>
-
-                        <div>
-                            <p className='font-semibold mb-1 font-garamond'>Confirm Password</p>
-                            <input
-                                type='password'
-                                name='confirmPassword'
-                                onChange={handleChange}
-                                placeholder='Enter Your Password Again'
-                                className='h-[50px] w-full border rounded-[15px] p-2 focus:border-sky-500 focus:outline-none'
-                            />
-                        </div>
-                    </div>
-
-                    <button
-                        disabled={isLoading}
-                        className='h-[55px] w-full max-w-[272px] rounded-[20px] bg-[#C8B6A3] hover:bg-[#B8A693] cursor-pointer mt-8 font-bold font-garamond'>
-                        {isLoading ? "Creating..." : "Create A Account"}
-                    </button>
-
-                    {error && <p>{error}</p>}
-
-                    
-                </form>
-
-                <NavLink
-                    to={"/login"}
-                    className='underline text-sky-700 hover:text-sky-400 cursor-pointer mt-3 font-garamond'>
-                    Already Have An Account?
-                </NavLink>
-            </div>
-
-            {/* Side Banner Section*/}
-
-            <div className='hidden md:flex flex-1 justify-end mt-[75px]'>
-                <img
-                    src='/Auth.jpg'
-                    alt='Auth-image'
-                    className='w-[750px] h-[610px] rounded-l-[20px] object-cover'
-                />
-            </div>
+        <div className="flex items-start min-h-screen w-full overflow-x-hidden bg-white font-['EB_Garamond',_serif]">
+      
+      {/* Signup Section */}
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        /* Strictly ml-[20px] for desktop, centered for mobile */
+        className="ml-0 sm:ml-[20px] w-full md:w-[540px] flex flex-col items-center mt-[60px] md:mt-[75px] shrink-0 px-6 sm:px-0"
+      >
+        <div className="mb-10 text-center md:text-left w-full max-w-[385px]">
+          
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase italic leading-[0.9] mt-2">
+            Create A <br /> New Account
+          </h1>
         </div>
+
+        <form 
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center w-full"
+        >
+          <div className="flex flex-col gap-6 w-full max-w-[385px]">
+            {/* Name Field */}
+            <div className="space-y-1">
+              <p className="font-sans text-[10px] uppercase tracking-widest font-bold opacity-60">Full Name</p>
+              <input
+                name="username"
+                type="text"
+                onChange={handleChange}
+                placeholder="John Doe"
+                className="h-[45px] w-full border-b border-black/10 bg-transparent p-2 text-lg focus:border-[#948181] focus:outline-none transition-colors placeholder:opacity-20"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-1">
+              <p className="font-sans text-[10px] uppercase tracking-widest font-bold opacity-60">Email</p>
+              <input
+                name="email"
+                type="email"
+                onChange={handleChange}
+                placeholder="name@example.com"
+                className="h-[45px] w-full border-b border-black/10 bg-transparent p-2 text-lg focus:border-[#948181] focus:outline-none transition-colors placeholder:opacity-20"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-1">
+              <p className="font-sans text-[10px] uppercase tracking-widest font-bold opacity-60">Password</p>
+              <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                placeholder="••••••••"
+                className="h-[45px] w-full border-b border-black/10 bg-transparent p-2 text-lg focus:border-[#948181] focus:outline-none transition-colors placeholder:opacity-20"
+              />
+            </div>
+
+            {/* Confirm Password Field */}
+            <div className="space-y-1">
+              <p className="font-sans text-[10px] uppercase tracking-widest font-bold opacity-60">Confirm Password</p>
+              <input
+                type="password"
+                name="confirmPassword"
+                onChange={handleChange}
+                placeholder="••••••••"
+                className="h-[45px] w-full border-b border-black/10 bg-transparent p-2 text-lg focus:border-[#948181] focus:outline-none transition-colors placeholder:opacity-20"
+              />
+            </div>
+          </div>
+
+          <button 
+            disabled={isLoading}
+            className="group relative h-[55px] w-full max-w-[385px] bg-black text-white overflow-hidden mt-10 transition-all duration-500 rounded-none md:rounded-[20px]"
+          >
+            <span className="relative z-10 font-sans font-bold uppercase text-[11px] tracking-[0.2em]">
+              {isLoading ? "Creating Account..." : "Register Now"}
+            </span>
+            <div className="absolute inset-0 bg-[#948181] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+          </button>
+
+          {error && <p className="text-red-500 mt-4 font-sans text-xs">{error}</p>}
+        </form>
+
+        <NavLink 
+          to="/login"
+          className="mt-6 font-sans text-[10px] uppercase tracking-widest font-bold opacity-40 hover:opacity-100 transition-opacity underline underline-offset-4"
+        >
+          Already have an account? Log in
+        </NavLink>
+      </motion.div>
+
+      {/* Side Banner Section */}
+      <motion.div 
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="hidden md:flex flex-1 justify-end mt-[75px] pl-10"
+      >
+        <div className="relative">
+          <div className="absolute -inset-10 bg-[#948181]/5 blur-3xl rounded-full"></div>
+          <img
+            src="/Auth.jpg"
+            alt="Signup-visual"
+            className="relative w-[750px] h-[610px] rounded-l-[40px] object-cover shadow-2xl grayscale-[20%]"
+          />
+        </div>
+      </motion.div>
+    </div>
     )
 }
 
