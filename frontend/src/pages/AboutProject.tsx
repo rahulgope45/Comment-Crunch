@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { SiGithub, SiX } from 'react-icons/si';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { FiCpu, FiTarget, FiLayers, FiLinkedin } from 'react-icons/fi';
+import { NavLink } from 'react-router-dom';
 
 const AboutPage: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const AboutPage: React.FC = () => {
           <motion.h1 
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-8xl md:text-[12rem] font-bold leading-[0.8] tracking-tighter uppercase mb-12"
+            className="flex flex-col text-6xl md:text-[10rem] font-bold leading-[0.8] tracking-tighter uppercase mb-12"
           >
             Decoding <br /> 
             <span className="italic font-medium text-black/40">Context.</span>
@@ -26,9 +27,9 @@ const AboutPage: React.FC = () => {
               from the noise of digital discourse.
             </p>
             <div className="flex gap-6 text-2xl pt-2">
-              <a href="#" className="hover:opacity-50 transition-opacity"><SiX /></a>
-              <a href="#" className="hover:opacity-50 transition-opacity"><SiGithub /></a>
-              <a href="#" className="hover:opacity-50 transition-opacity"><FiLinkedin /></a>
+              <a href="https://x.com/Rahul26664125" className="hover:opacity-50 transition-opacity"><SiX /></a>
+              <a href="https://github.com/rahulgope45" className="hover:opacity-50 transition-opacity"><SiGithub /></a>
+              <a href="https://www.linkedin.com/in/rahul-gope-808476369" className="hover:opacity-50 transition-opacity"><FiLinkedin /></a>
             </div>
           </div>
         </section>
@@ -70,18 +71,16 @@ const AboutPage: React.FC = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-black text-white p-12 md:p-24 flex flex-col md:flex-row justify-between items-center group cursor-pointer">
+        <NavLink 
+        to="/app"
+        className="bg-black text-white p-12 md:p-24 flex flex-col md:flex-row justify-between items-center group cursor-pointer">
           <h2 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter italic">
             Start Crunching
           </h2>
           <HiOutlineArrowNarrowRight className="text-7xl group-hover:translate-x-4 transition-transform duration-500" />
-        </section>
+        </NavLink>
 
-        {/* Minimal Footer Branding */}
-        <footer className="mt-24 pt-12 flex justify-between items-end opacity-20 hover:opacity-100 transition-opacity duration-700">
-          <div className="text-6xl font-bold tracking-tighter uppercase leading-none">Crunch</div>
-          <div className="font-sans text-xs uppercase tracking-widest pb-1">Est. 2026 / Pune, IN</div>
-        </footer>
+        
 
       </main>
     </div>

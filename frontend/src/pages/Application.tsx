@@ -10,6 +10,7 @@ import { useAuth } from '../hooks/useAuth';
 import type { FetchCommentsResponse } from '../types/comment.type';
 import { fetchComments } from '../services/commentService';
 import CommentList from '../components/Comments';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Application(): JSX.Element {
 
@@ -62,170 +63,151 @@ function Application(): JSX.Element {
 
 
     return (
-        <div className="min-h-screen bg-gray-50 py-20 px-4 font-garamond">
+        <div className="min-h-screen bg-white py-16 px-4 font-['EB_Garamond',_serif] text-black overflow-hidden">
             <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold text-gray-700 mb-3">
+
+                {/* Header Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-16"
+                >
+                    <span className="text-[#948181] uppercase tracking-[0.3em] text-[10px] font-sans font-bold">
+                        Intelligence Engine
+                    </span>
+                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase italic leading-none mt-2">
                         Happy Analyzing
                     </h1>
-                    {/* <p className="text-gray-600 text-lg">
-                        Analyze YouTube comments and discover sentiment insights
-                    </p> */}
-                </div>
+                </motion.div>
 
-                {/* Input Form */}
-                <div className="flex justify-center mb-12">
+                {/* Input Form Section */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex justify-center mb-20"
+                >
                     <CommentForm onSubmit={handleSubmit} isLoading={isLoading} />
-                </div>
+                </motion.div>
 
-                {/* Loading State */}
-                {isLoading && (
-                    <div className="flex justify-center">
-                        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
-                            <LoadingSpinner message="Fetching and analyzing comments..." />
-                            <p className="text-center text-sm text-gray-500 mt-4">
-                                This may take 30-60 seconds for large videos
-                            </p>
-                        </div>
-                    </div>
-                )}
+                <AnimatePresence mode="wait">
+                    {/* Loading State */}
+                    {isLoading && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="flex justify-center"
+                        >
+                            <div className="bg-white border border-black/5 p-12 max-w-md w-full text-center shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-3xl">
+                                <LoadingSpinner message="Crunching Community Sentiment..." />
+                                <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#948181] mt-6 font-bold">
+                                    Processing neural mapping • 30-60s
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
 
-                {/* Error State */}
-                {error && !isLoading && (
-                    <div className="max-w-2xl mx-auto">
-                        <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-md">
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0">
-                                    <svg
-                                        className="h-6 w-6 text-red-500"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        />
+                    {/* Error State */}
+                    {error && !isLoading && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="max-w-2xl mx-auto"
+                        >
+                            <div className="bg-red-50/50 border border-red-100 p-8 rounded-3xl flex items-center gap-4">
+                                <div className="h-10 w-10 bg-red-500 rounded-full flex items-center justify-center shrink-0">
+                                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
-                                <div className="ml-3">
-                                    <h3 className="text-lg font-medium text-red-800">Error</h3>
-                                    <p className="text-red-700 mt-1">{error}</p>
+                                <div>
+                                    <h3 className="font-sans font-bold uppercase text-xs tracking-widest text-red-900">Analysis Error</h3>
+                                    <p className="text-red-700 font-garamond text-lg">{error}</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                )}
+                        </motion.div>
+                    )}
 
-                {/* Results Section */}
-                {results && !isLoading && (
-                    <div className="space-y-8">
-                        {/* Results Header */}
-                        <div className="text-center">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-2">Results</h2>
-                            <p className="text-gray-600">
-                                Analyzed {results.summary.valid_comments} comments in{' '}
-                                {results.summary.fetch_time_seconds.toFixed(1)} seconds
-                                {results.summary.cached && (
-                                    <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                        Cached
-                                    </span>
-                                )}
+                    {/* Results Section */}
+                    {results && !isLoading && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="space-y-16"
+                        >
+                            {/* Results Header */}
+                            <div className="text-center">
+                                <h2 className="text-4xl font-bold uppercase tracking-tighter italic">Results</h2>
+                                <div className="flex items-center justify-center gap-4 mt-2 font-sans text-[10px] font-bold uppercase tracking-widest opacity-50">
+                                    <span>{results.summary.valid_comments} Samples</span>
+                                    <span className="h-1 w-1 bg-black rounded-full"></span>
+                                    <span>{results.summary.fetch_time_seconds.toFixed(1)}s Speed</span>
+                                    {results.summary.cached && (
+                                        <span className="bg-[#948181] text-white px-2 py-0.5 rounded-sm">Cached</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Core Insights Grid */}
+                            <div className="grid grid-cols-1 gap-12">
+                                <div className="flex justify-center"><VideoMetadta video={results.video} /></div>
+                                <div className="flex justify-center"><OverallSentiment sentimentAnalysis={results.sentiment_analysis} /></div>
+                            </div>
+
+                            {/* Charts Section - Clean Backgrounds */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                                <div className="p-8 bg-white border border-black/5 rounded-[40px] shadow-sm flex justify-center">
+                                    <SentimentPieChart sentimentAnalysis={results.sentiment_analysis} />
+                                </div>
+                                <div className="p-8 bg-white border border-black/5 rounded-[40px] shadow-sm flex justify-center">
+                                    <SentimentBarChart sentimentAnalysis={results.sentiment_analysis} />
+                                </div>
+                            </div>
+
+                            {/* Summary Stats Cards */}
+                            <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 py-10 border-y border-black/5">
+                                {[
+                                    { label: "Total Fetched", val: results.summary.total_fetched, color: "text-black" },
+                                    { label: "Valid", val: results.summary.valid_comments, color: "text-green-600" },
+                                    { label: "Spam/Filtered", val: results.summary.rejected_comments, color: "text-red-600" },
+                                    { label: "Neural Time", val: `${results.summary.fetch_time_seconds.toFixed(1)}s`, color: "text-[#948181]" }
+                                ].map((stat, i) => (
+                                    <div key={i} className="text-center">
+                                        <p className="font-sans text-[10px] uppercase tracking-widest font-bold opacity-40 mb-2">{stat.label}</p>
+                                        <p className={`text-3xl font-bold italic ${stat.color}`}>{stat.val}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Comment List Section */}
+                            <div className="max-w-6xl mx-auto">
+                                <CommentList comments={results.comments} />
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {/* Empty State */}
+                    {!results && !isLoading && !error && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="max-w-2xl mx-auto text-center py-20"
+                        >
+                            <div className="relative inline-block">
+                                <div className="absolute inset-0 bg-[#948181]/10 blur-3xl rounded-full"></div>
+                                <svg className="relative mx-auto h-20 w-20 text-black/10 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-2xl font-bold uppercase italic tracking-tight">System Idle</h3>
+                            <p className="font-sans text-[11px] uppercase tracking-[0.2em] opacity-40 mt-2 font-bold">
+                                Awaiting YouTube Data Stream
                             </p>
-                        </div>
-
-                        {/* Video Metadata */}
-                        <div className="flex justify-center">
-                            <VideoMetadta video={results.video} />
-                        </div>
-
-                        {/* Overall Sentiment - Centered */}
-                        <div className="flex justify-center">
-                            <OverallSentiment sentimentAnalysis={results.sentiment_analysis} />
-                        </div>
-
-                        {/* Charts Section */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                            <div className="flex justify-center">
-                                <SentimentPieChart sentimentAnalysis={results.sentiment_analysis} />
-                            </div>
-                            <div className="flex justify-center">
-                                <SentimentBarChart sentimentAnalysis={results.sentiment_analysis} />
-                            </div>
-                        </div>
-
-                        {/* Summary Stats */}
-                        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-4">Summary</h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div className="text-center">
-                                    <p className="text-sm text-gray-500 mb-1">Total Fetched</p>
-                                    <p className="text-2xl font-bold text-gray-800">
-                                        {results.summary.total_fetched}
-                                    </p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm text-gray-500 mb-1">Valid Comments</p>
-                                    <p className="text-2xl font-bold text-green-600">
-                                        {results.summary.valid_comments}
-                                    </p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm text-gray-500 mb-1">Rejected (Spam)</p>
-                                    <p className="text-2xl font-bold text-red-600">
-                                        {results.summary.rejected_comments}
-                                    </p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm text-gray-500 mb-1">Processing Time</p>
-                                    <p className="text-2xl font-bold text-blue-600">
-                                        {results.summary.fetch_time_seconds.toFixed(1)}s
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Placeholder for Comment List (will add next) */}
-                        <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
-                            {results.comments.length > 0 && (
-                                <div className="max-w-6xl mx-auto">
-                                    <CommentList comments={results.comments} />
-                                </div>
-                            )}
-
-                        </div>
-                    </div>
-                )}
-
-                {/* Empty State - Show when no results and no loading/error */}
-                {!results && !isLoading && !error && (
-                    <div className="max-w-2xl mx-auto text-center py-12">
-                        <div className="bg-white rounded-lg shadow-md p-12">
-                            <svg
-                                className="mx-auto h-16 w-16 text-gray-400 mb-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                />
-                            </svg>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                                No Analysis Yet
-                            </h3>
-                            <p className="text-gray-600">
-                                Enter a YouTube video URL above to get started with sentiment analysis
-                            </p>
-                        </div>
-                    </div>
-                )}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </div>
     )

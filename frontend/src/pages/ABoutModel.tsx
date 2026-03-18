@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BsArrowUpRight, BsCpu, BsDatabaseUp, BsShieldCheck } from 'react-icons/bs';
 import { BiBarChart } from 'react-icons/bi';
+import { NavLink } from 'react-router-dom';
 // import { ShieldCheck, Cpu, Database, BarChart3, ArrowUpRight } from 'lucide-react';
 
 interface ModelSpec {
@@ -108,13 +109,17 @@ const ModelDetailPage: React.FC = () => {
                 ))}
               </div>
 
-              <div className="mt-12 space-y-4">
-                <button className="w-full bg-white text-black py-4 font-sans font-bold uppercase text-xs tracking-widest hover:bg-[#948181] hover:text-white transition-all duration-300">
+              <div className="mt-12 space-y-4 flex flex-col">
+                <NavLink 
+                to="/app"
+                className="w-full sm:w-[150px] text-center p-2 bg-white text-black py-4 font-sans font-bold uppercase text-xs tracking-widest hover:bg-[#948181] hover:text-white transition-all duration-300">
                   Analyze Sample
-                </button>
-                <button className="w-full border border-white/20 py-4 font-sans font-bold uppercase text-xs tracking-widest hover:bg-white/5 transition-all">
+                </NavLink>
+                <a
+                href='https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest?text=Nice+video%0ANeed+Improvement+%0Aspeed+up+the+pace'
+                className="w-full sm:w-[150px] text-center border border-white/20 py-4 font-sans font-bold uppercase text-xs tracking-widest hover:bg-white/5 transition-all">
                   View Source
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>

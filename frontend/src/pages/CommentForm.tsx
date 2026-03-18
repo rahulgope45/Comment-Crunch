@@ -51,37 +51,45 @@ function CommentForm({ onSubmit, isLoading }: CommentFormProps): JSX.Element {
     }
 
     return (
-        <div className="w-full max-w-4xl">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="flex gap-5">
-                    {/* YouTube URL Input */}
-                    <div className="flex-1">
+        <div className="w-full max-w-5xl px-4 font-['EB_Garamond',_serif]">
+            <form onSubmit={handleSubmit} className="w-full">
+                <div className="flex flex-col md:flex-row items-start gap-4 md:gap-2">
+
+                    {/* YouTube URL Input Container */}
+                    <div className="flex-1 w-full">
                         <input
-                            className={`w-full h-[70px] border p-5 rounded-lg ${errors.url ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full h-[70px] bg-transparent border-b-2 p-5 text-xl transition-all duration-300 focus:outline-none font-sans ${errors.url
+                                    ? 'border-red-500 text-red-500'
+                                    : 'border-black/10 focus:border-[#948181]'
                                 }`}
                             type="text"
-                            placeholder="Enter YouTube URL"
+                            placeholder="Paste YouTube Video URL"
                             value={videoUrl}
                             onChange={(e) => {
                                 setVideoUrl(e.target.value);
                                 setErrors({ ...errors, url: undefined });
                             }}
                             disabled={isLoading}
+                            
                         />
                         {errors.url && (
-                            <p className="text-red-500 text-sm mt-1">{errors.url}</p>
+                            <p className="text-red-500 font-sans text-xs uppercase tracking-widest mt-2 ml-2">
+                                {errors.url}
+                            </p>
                         )}
                     </div>
 
-                    {/* Max Comments Input */}
-                    <div className="w-[150px]">
+                    {/* Max Comments Input Container */}
+                    <div className="w-full md:w-[120px]">
                         <input
-                            className={`w-full h-[70px] border p-5 rounded-lg ${errors.count ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full h-[70px] bg-transparent border-b-2 p-5 text-xl text-center transition-all duration-300 focus:outline-none font-sans ${errors.count
+                                    ? 'border-red-500 text-red-500'
+                                    : 'border-black/10 focus:border-[#948181]'
                                 }`}
                             type="number"
                             min={10}
-                            max={500}
-                            placeholder="Count"
+                            max={50}
+                            placeholder="Qty"
                             value={maxComments}
                             onChange={(e) => {
                                 setMaxComments(Number(e.target.value));
@@ -90,7 +98,9 @@ function CommentForm({ onSubmit, isLoading }: CommentFormProps): JSX.Element {
                             disabled={isLoading}
                         />
                         {errors.count && (
-                            <p className="text-red-500 text-sm mt-1">{errors.count}</p>
+                            <p className="text-red-500 font-sans text-xs uppercase tracking-widest mt-2 text-center">
+                                {errors.count}
+                            </p>
                         )}
                     </div>
 
@@ -98,14 +108,25 @@ function CommentForm({ onSubmit, isLoading }: CommentFormProps): JSX.Element {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className={`h-[70px] px-8 rounded-lg font-semibold text-white transition-colors ${isLoading
-                                ? 'bg-gray-400 cursor-not-allowed rounded-2xl'
-                                : 'bg-blue-600 hover:bg-blue-700'
+                        className={`h-[70px] w-full md:w-[180px] relative overflow-hidden group transition-all duration-500 ${isLoading
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-black text-white'
                             }`}
                     >
-                        {isLoading ? 'Analyzing...' : 'Analyze'}
+                        <span className="relative z-10 font-sans font-bold uppercase text-xs tracking-[0.2em]">
+                            {isLoading ? 'Crunching...' : 'Analyze'}
+                        </span>
+                        {!isLoading && (
+                            <div className="absolute inset-0 bg-[#948181] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                        )}
                     </button>
+
                 </div>
+
+                {/* Minimalist Hint */}
+                <p className="mt-4 font-sans text-[10px] uppercase tracking-[0.2em] opacity-40 text-center md:text-left">
+                    Supports up to 500 comments for deep sentiment mapping.
+                </p>
             </form>
         </div>
     )
