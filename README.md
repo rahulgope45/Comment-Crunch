@@ -47,8 +47,8 @@ python -m venv venv
 # Activate (Windows)
 venv\Scripts\activate
 
-# Activate (Mac/Linux)
-# source venv/bin/activate
+## Activate (Mac/Linux)
+## source venv/bin/activate
 
 pip install -r requirements.txt
 uvicorn main:app --reload
@@ -81,6 +81,6 @@ VITE_API_URL	http://localhost:8000
 
 
 ### Connect With Me
-    [![Portfolio](https://img.shields.io/badge/Saideep_Morepatil-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://portfolio-2-two-ebon.vercel.app)
-    [![Portfolio](https://img.shields.io/badge/Saideep_Morepatil-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rahul-gope-808476369)
+[![Portfolio](https://img.shields.io/badge/PORTFOLIO-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://portfolio-2-two-ebon.vercel.app)
+[![Portfolio](https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rahul-gope-808476369)
     
