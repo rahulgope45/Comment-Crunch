@@ -11,3 +11,4 @@ class User(Base):
     username=Column(String, unique=True,index=True,nullable=False)
     profilepic=Column(String,nullable=True)
     created_at=Column(DateTime,default=lambda: datetime.now(timezone.utc))
+    updated_at=Column(DateTime,default=lambda:datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc))
