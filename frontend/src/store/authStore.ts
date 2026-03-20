@@ -16,6 +16,7 @@ interface AuthState {
     // token: string | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    isCheckingAuth: boolean;
     error: string | null;
     signin: (data: SigninPayload) => Promise<void>;
     login: (data: LoginPayload) => Promise<void>;
@@ -27,7 +28,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     // token: localStorage.getItem("token"),
     isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
+    isCheckingAuth: true,
     error: null,
 
     login: async (data) => {
@@ -91,14 +93,14 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     checkAuth: async () => {
         try {
-            set({ isLoading: true });
+            set({ isCheckingAuth: true });
             console.log("🔍 checkAuth running...");
             const user = await authApi.getcurrentUser();
             console.log("✅ Got user:", user);
-            set({ user, isAuthenticated: true, isLoading: false });
+            set({ user, isAuthenticated: true, isCheckingAuth: false });
         } catch (err: any) {
             console.log("❌ checkAuth failed:", err.response?.status, err.response?.data);
-            set({ user: null, isAuthenticated: false, isLoading: false });
+            set({ user: null, isAuthenticated: false, isCheckingAuth:false });
         }
     },
 

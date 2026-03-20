@@ -10,6 +10,7 @@ export const useAuth =() =>{
     const login = useAuthStore((state) => state.login)
     const logout = useAuthStore((state) => state.logout)
     const checkAuth = useAuthStore((state) => state.checkAuth)
+    const isCheckingAuth = useAuthStore((state) => state.isCheckingAuth)
 
     return{
         user,
@@ -20,5 +21,6 @@ export const useAuth =() =>{
         login,
         logout,
         checkAuth,
+        isCheckingAuth,
     };
 };

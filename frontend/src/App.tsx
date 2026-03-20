@@ -13,14 +13,24 @@ import AboutPage from './pages/AboutProject'
 import ContactRedirect from './pages/AboutUs'
 
 function App() {
-
-const {checkAuth} = useAuth()
+const {isCheckingAuth,checkAuth} = useAuth()
 
 useEffect(()=>{
   checkAuth();
 },[])
 
+if(isCheckingAuth){
   return (
+      <div className="flex items-center justify-center min-h-screen bg-white">
+        <span className="font-sans text-xs uppercase tracking-widest opacity-40">
+          Loading...
+        </span>
+      </div>
+    );
+}
+
+ 
+    return (
     <main>
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
@@ -41,6 +51,7 @@ useEffect(()=>{
       </Routes>
     </main>
   )
+  
 }
 
 export default App
