@@ -28,13 +28,13 @@ const Footer: React.FC = () => {
                     </span>
                     <div className="flex gap-2">
                         <a
-                            href="#"
+                            href="https://x.com/Rahul26664125"
                             className="flex items-center justify-center w-9 h-9 rounded border border-white/40 bg-white/10 hover:bg-white/20 transition-colors"
                         >
                             <FaXTwitter className="text-white text-base" />
                         </a>
                         <a
-                            href="#"
+                            href="https://www.linkedin.com/in/rahul-gope-808476369"
                             className="flex items-center justify-center w-9 h-9 rounded border border-white/40 bg-white/10 hover:bg-white/20 transition-colors"
                         >
                             <FaLinkedinIn className="text-white text-base" />

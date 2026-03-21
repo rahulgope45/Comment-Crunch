@@ -52,7 +52,7 @@ const ModelDetailPage: React.FC = () => {
             className="text-xl max-w-md font-sans leading-relaxed border-l border-white/10 pl-8 pb-2"
           >
             Optimized for the high-velocity linguistic shifts of social media. 
-            The core intelligence driving the <span className="italic text-white">Comment-Crunch</span> ecosystem.
+            The core intelligence driving the <span className="italic text-black">Comment-Crunch</span> ecosystem.
           </motion.div>
         </div>
 
