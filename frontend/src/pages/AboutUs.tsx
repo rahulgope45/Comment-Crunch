@@ -4,7 +4,7 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { FiExternalLink } from 'react-icons/fi';
 
 const ContactRedirect: React.FC = () => {
-  const portfolioUrl = "https://portfolio-2-two-ebon.vercel.app";
+  const portfolioUrl = "https://rahulgope.vercel.app";
 
 //   useEffect(() => {
 //     // Optional: Small delay so the user sees the "Redirecting" state
