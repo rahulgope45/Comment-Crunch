@@ -5,7 +5,7 @@ import { prisma } from './lib/prisma.js';
 import figlet from 'figlet';
 import chalk from 'chalk';
 import cookieParser from 'cookie-parser';
-import authRoutes from '../src/routes/user.route.js';
+import authRoutes from './routes/user.route.js';
 const PORT = 3000;
 const app = express();
 app.use(express.json());

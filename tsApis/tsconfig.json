@@ -10,7 +10,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "esnext",
-    "types": [],
+    "types": ["jest","node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -42,5 +42,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts","**/*.test.ts"],
+  "exclude": ["node_modules", "dist"]
 }
