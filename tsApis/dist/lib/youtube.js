@@ -1,8 +1,4 @@
 import { google } from 'googleapis';
-const YOUTUBE = process.env.YOUTUBE_API_KEY;
-if (!YOUTUBE) {
-    console.log("YOUTUBE_API_KEY is not defined");
-}
 export const youtube = google.youtube({
     version: 'v3',
     auth: process.env.YOUTUBE_API_KEY
@@ -29,6 +25,7 @@ export const extractVideoId = (url) => {
     catch (error) {
         console.log(error);
     }
+    //Ditched this one upper one is better
     // const patterns = [
     //     "(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})",
     //     "(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})",
@@ -45,5 +42,31 @@ export const extractVideoId = (url) => {
         return url;
     }
     return null;
+};
+//Testing Youtube Service 
+export const testYoutubeConnection = async () => {
+    /*
+    testYoutubeConnection is for testing Youtube connection confirming
+    env with a simple request to the api
+    */
+    try {
+        if (!process.env.YOUTUBE_API_KEY) {
+            return false;
+        }
+        const request = await youtube.videos.list({
+            part: ['snippet'],
+            id: ['dQw4w9WgXcQ'],
+            maxResults: 1
+        });
+        if (request.status === 200) {
+            console.log("Youtube API is connected");
+            return true;
+        }
+        return false;
+    }
+    catch (error) {
+        console.log(error, "Api connection failed");
+        return false;
+    }
 };
 //# sourceMappingURL=youtube.js.map

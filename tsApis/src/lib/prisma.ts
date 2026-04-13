@@ -19,3 +19,16 @@ const pool = new Pool({
 const adapter = new PrismaPg(pool);
 
 export const prisma = new PrismaClient({adapter})
+
+//better connection test
+
+export const testDatabaseConnection=async():Promise<boolean>=>{
+ try {
+    await prisma.$queryRaw`SELECT 1`;
+    console.log("Database is connected")
+    return true;
+ } catch (error) {
+    console.log("connection Failed")
+    return false;
+ }
+}
