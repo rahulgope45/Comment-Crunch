@@ -9,5 +9,19 @@ export interface VideoMetaData {
     thumbnail_url: string | null;
     published_at: Date | null;
 }
+export interface YoutubeComment {
+    commentId: string;
+    authorName: string | null;
+    authorChannelId: string | null;
+    authorProfileImageUrl: string | null;
+    textOriginal: string | null;
+    textDisplay: string | null;
+    likeCount: number;
+    replyCount: number;
+    isReply: boolean;
+    parentId: string | null;
+    publishedAt: Date | null;
+}
 export declare const fetchYoutubeMetaData: (video_id: string) => Promise<VideoMetaData | null>;
+export declare const fetchYoutubeComments: (video_id: string, max_comments?: number) => Promise<YoutubeComment[]>;
 //# sourceMappingURL=youtube.service.d.ts.map

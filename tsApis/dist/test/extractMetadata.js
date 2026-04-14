@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { fetchYoutubeMetaData } from '../services/youtube.service.js';
 import { extractVideoId, youtube } from '../lib/youtube.js';
 export const testYoutubeflow = async () => {
@@ -11,7 +12,7 @@ export const testYoutubeflow = async () => {
         //fetching data
         const metadata = await fetchYoutubeMetaData(videoId);
         if (!metadata) {
-            console.log("Failed to fetch metadat");
+            console.log("Failed to fetch metadata");
             return;
         }
         console.log('Video Data -:');
@@ -21,4 +22,5 @@ export const testYoutubeflow = async () => {
         console.log("Test Failed", error);
     }
 };
+testYoutubeflow();
 //# sourceMappingURL=extractMetadata.js.map

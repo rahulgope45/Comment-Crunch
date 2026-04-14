@@ -1,4 +1,5 @@
-import { google } from 'googleapis';
+import "dotenv/config";
+import { google, youtube_v3 } from 'googleapis';
 export const youtube = google.youtube({
     version: 'v3',
     auth: process.env.YOUTUBE_API_KEY
