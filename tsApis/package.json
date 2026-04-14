@@ -8,7 +8,6 @@
     "dev": "tsx --watch src/index.ts",
     "devstart": "nodemon dist/index.js ",
     "start": "node dist/index.js"
-    
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +37,7 @@
     "dotenv": "^17.4.1",
     "express": "^5.2.1",
     "figlet": "^1.11.0",
+    "gaxios": "^7.1.4",
     "googleapis": "^171.4.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
