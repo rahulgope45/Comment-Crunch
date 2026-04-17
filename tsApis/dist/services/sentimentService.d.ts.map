@@ -1,0 +1,1 @@
+{"version":3,"file":"sentimentService.d.ts","sourceRoot":"","sources":["../../src/services/sentimentService.ts"],"names":[],"mappings":"AAUA,MAAM,WAAW,gBAAgB;IAC7B,SAAS,EAAE,UAAU,GAAG,UAAU,GAAG,SAAS,CAAC;IAC/C,WAAW,EAAE,MAAM,CAAC;IACpB,KAAK,EAAE,MAAM,CAAC;CACjB"}

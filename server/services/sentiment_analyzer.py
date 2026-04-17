@@ -16,9 +16,7 @@ class SentimentAnalyzer:
     
     # NEW API endpoint (changed from api-inference to router)
     MODELS = [
-        "cardiffnlp/twitter-roberta-base-sentiment-latest",
-        # "distilbert-base-uncased-finetuned-sst-2-english", 
-        # "finiteautomata/bertweet-base-sentiment-analysis",
+        "https://router.huggingface.co/hf-inference/models/cardiffnlp/twitter-roberta-base-sentiment-latest",
     ]
     
     API_TOKEN = os.getenv("HUGGINGFACE_API_TOKEN")
