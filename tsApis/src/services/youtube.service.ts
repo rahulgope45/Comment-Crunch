@@ -1,7 +1,7 @@
-
+import { prisma } from '../lib/prisma.js';
 import { youtube } from '../lib/youtube.js';
 import { youtube_v3 } from 'googleapis';
-import type { GaxiosResponse } from "gaxios";
+
 
 export interface VideoMetaData {
 
@@ -151,3 +151,12 @@ export const fetchYoutubeComments = async (video_id: string, max_comments: numbe
     }
 
 }
+
+//============= Checking Video exist or not (Todo) ===============
+export const checkVideoExist =()=>{
+    prisma.$queryRaw
+}
+
+
+//============= Video sttus update  (Todo) ===============
+

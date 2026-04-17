@@ -1,3 +1,4 @@
+import { prisma } from '../lib/prisma.js';
 import { youtube } from '../lib/youtube.js';
 import { youtube_v3 } from 'googleapis';
 // ========= Fetch Youtube Metadata =========
@@ -101,4 +102,9 @@ export const fetchYoutubeComments = async (video_id, max_comments = 500) => {
         throw new Error("Failed to fetch comments");
     }
 };
+//============= Checking Video exist or not (Todo) ===============
+export const checkVideoExist = () => {
+    prisma.$queryRaw;
+};
+//============= Video sttus update  (Todo) ===============
 //# sourceMappingURL=youtube.service.js.map
