@@ -24,4 +24,5 @@ export interface YoutubeComment {
 }
 export declare const fetchYoutubeMetaData: (video_id: string) => Promise<VideoMetaData | null>;
 export declare const fetchYoutubeComments: (video_id: string, max_comments?: number) => Promise<YoutubeComment[]>;
+export declare const checkVideoExist: () => void;
 //# sourceMappingURL=youtube.service.d.ts.map
