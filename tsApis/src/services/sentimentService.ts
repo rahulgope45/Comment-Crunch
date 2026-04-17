@@ -18,7 +18,7 @@ const getApiUrl = (model: string): string => {
     return model;
 };
 
-//test model connection
+//============= test model connection ===================
 const testModel = async(model: string):Promise<boolean>=>{
     try {
         const res = await fetch(getApiUrl(model),{
@@ -42,3 +42,23 @@ const testModel = async(model: string):Promise<boolean>=>{
         return false;
     }
 }
+
+//============ Find Working model =========================
+
+const findWorkingModel = async():Promise<string | null> => {
+ if(workingModel) return workingModel;
+
+ console.log("Searching for model")
+
+ for(const model of MODELS){
+    const ok = await testModel(model);
+    if(ok){
+        workingModel = model;
+        console.log(`using model: ${model}`);
+        return model;
+    }
+ }
+ console.error("No model found");
+ return null;
+};
+

@@ -8,7 +8,7 @@ let workingModel = null;
 const getApiUrl = (model) => {
     return model;
 };
-//test model connection
+//============= test model connection ===================
 const testModel = async (model) => {
     try {
         const res = await fetch(getApiUrl(model), {
@@ -31,5 +31,21 @@ const testModel = async (model) => {
         console.warn(`Model test failed`);
         return false;
     }
+};
+//============ Find Working model =========================
+const findWorkingModel = async () => {
+    if (workingModel)
+        return workingModel;
+    console.log("Searching for model");
+    for (const model of MODELS) {
+        const ok = await testModel(model);
+        if (ok) {
+            workingModel = model;
+            console.log(`using model: ${model}`);
+            return model;
+        }
+    }
+    console.error("No model found");
+    return null;
 };
 //# sourceMappingURL=sentimentService.js.map
